@@ -1,0 +1,141 @@
+[gd_scene load_steps=11 format=3 uid="uid://p66g2ickt2gd"]
+
+[ext_resource type="Texture2D" uid="uid://c3rhue7vshk7q" path="res://Assets/Isometric_Tiles_Pixel_Art/Blocks/blocks_1.png" id="1_2e4s2"]
+[ext_resource type="Script" path="res://Scripts/level_2_logic.gd" id="1_x8enn"]
+[ext_resource type="Texture2D" uid="uid://c4ohsw2hley8v" path="res://Assets/Isometric_Tiles_Pixel_Art/Blocks/blocks_3.png" id="2_uy4gs"]
+[ext_resource type="PackedScene" uid="uid://e6rx7vhkuj6a" path="res://Scenes/pet.tscn" id="3_oyloj"]
+[ext_resource type="PackedScene" uid="uid://cetyt4s1xia1l" path="res://Scenes/water_glimmer.tscn" id="4_i5fsu"]
+[ext_resource type="PackedScene" uid="uid://f77hdqnog6rr" path="res://Scenes/add_ponds_btn.tscn" id="6_ekcb0"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_diw80"]
+texture = ExtResource("1_2e4s2")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nun7l"]
+texture = ExtResource("2_uy4gs")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5ex7n"]
+tile_shape = 1
+tile_layout = 4
+sources/5 = SubResource("TileSetAtlasSource_diw80")
+sources/6 = SubResource("TileSetAtlasSource_nun7l")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3tvwo"]
+vertices = PackedVector2Array(2, 179, -45, 155, -14, 140, 1, 148, 2, 164, 2, 212, -30, 195, 51, 155, 81, 172, -5, 85, 17, 74, 52, 92, 19, 110, -14, 124, -40, 103, -29, 133, -62, 115, 16, 171, 34, 131, 9, 159)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 0, 7, 8), PackedInt32Array(9, 10, 11, 12, 13, 14), PackedInt32Array(15, 16, 14, 13), PackedInt32Array(0, 4, 17), PackedInt32Array(7, 0, 17), PackedInt32Array(18, 7, 17, 19), PackedInt32Array(18, 19, 13, 12)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2, 212, -30, 195, 2, 179, -45, 155, -14, 140, 1, 148, 2, 164, 16, 171, 9, 159, -14, 124, -29, 133, -62, 115, -40, 103, -5, 85, 17, 74, 52, 92, 19, 110, 34, 131, 51, 155, 81, 172)])
+
+[node name="Level2" type="Node2D"]
+script = ExtResource("1_x8enn")
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+position = Vector2(28, 57)
+scale = Vector2(0.5, 0.5)
+tile_set = SubResource("TileSet_5ex7n")
+format = 2
+layer_0/name = "Layer_0"
+layer_0/y_sort_enabled = true
+layer_0/z_index = -2
+layer_0/tile_data = PackedInt32Array(393208, 5, 0, 458747, 5, 0, 524286, 5, 0, 589817, 6, 0, 983027, 5, 0, 655348, 5, 0, 458739, 5, 0, 1048566, 5, 0, 786418, 5, 0, 589809, 5, 0, 393200, 5, 0, 131060, 5, 0, 196591, 5, 0, 196599, 5, 0, 262138, 5, 0, 327677, 5, 0, 1179636, 5, 0, 1245175, 5, 0, 1441784, 5, 0, 1376245, 5, 0, 524270, 5, 0, 720879, 5, 0, 917488, 5, 0, 1114097, 5, 0, 1310706, 5, 0, 1048558, 5, 0, 1245167, 5, 0, 983019, 5, 0, 1179628, 5, 0)
+layer_1/name = "Layer_1"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = true
+layer_1/y_sort_origin = 0
+layer_1/z_index = -1
+layer_1/tile_data = PackedInt32Array(851957, 6, 0, 327669, 5, 0, 917496, 6, 0, 262130, 5, 0, 65521, 5, 0, 524278, 6, 0)
+
+[node name="Pet" parent="." instance=ExtResource("3_oyloj")]
+position = Vector2(30, 201)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(18, -2)
+navigation_polygon = SubResource("NavigationPolygon_3tvwo")
+
+[node name="Locations" type="Node" parent="."]
+
+[node name="1" type="Node2D" parent="Locations"]
+position = Vector2(83, 171)
+
+[node name="2" type="Node2D" parent="Locations"]
+position = Vector2(5, 191)
+
+[node name="3" type="Node2D" parent="Locations"]
+position = Vector2(-28, 112)
+
+[node name="4" type="Node2D" parent="Locations"]
+position = Vector2(36, 83)
+
+[node name="5" type="Node2D" parent="Locations"]
+position = Vector2(3, 149)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(47, 157)
+offset = Vector2(-20, 0)
+zoom = Vector2(2, 2)
+
+[node name="Pond25" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(34, 63)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond21" parent="." instance=ExtResource("4_i5fsu")]
+z_index = -3
+position = Vector2(17, 71)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond22" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(1, 79)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond23" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(-13, 86)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond24" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(-28, 94)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond26" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(49, 70)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pond27" parent="." instance=ExtResource("4_i5fsu")]
+visible = false
+z_index = -3
+position = Vector2(65, 78)
+scale = Vector2(0.5, 0.5)
+
+[node name="Button" parent="." instance=ExtResource("6_ekcb0")]
+offset_left = 36.0
+offset_top = 234.0
+offset_right = 98.0
+offset_bottom = 265.0
+
+[node name="save" type="Button" parent="."]
+offset_left = -45.0
+offset_top = 235.0
+offset_right = -1.0
+offset_bottom = 266.0
+text = "Save"
+
+[node name="fish" type="Label" parent="."]
+offset_left = -45.0
+offset_top = 47.0
+offset_right = -5.0
+offset_bottom = 70.0
+
+[connection signal="pressed" from="save" to="." method="_on_save_pressed"]

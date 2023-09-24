@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://l68t7ie6nqev"]
+
+[ext_resource type="Script" path="res://Scripts/Paw.gd" id="1_hdjhs"]
+[ext_resource type="Texture2D" uid="uid://cfp2ckhqmn7ta" path="res://Assets/Paw.png" id="2_0ync6"]
+
+[sub_resource type="Animation" id="Animation_me4m0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hwwcu"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2.21913, 2.54912),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8thok"]
+_data = {
+"RESET": SubResource("Animation_me4m0"),
+"fade": SubResource("Animation_hwwcu")
+}
+
+[node name="Node2D" type="Node2D"]
+z_index = 1
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_hdjhs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 1)
+texture = ExtResource("2_0ync6")
+
+[node name="despawn" type="Timer" parent="."]
+wait_time = 20.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8thok")
+}

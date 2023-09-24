@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://crh0xkys3odc0"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerUi.gd" id="1_cxmvt"]
+
+[node name="PlayerUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cxmvt")
+
+[node name="AddPond" type="Button" parent="."]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 405.0
+offset_right = 290.0
+offset_bottom = 436.0
+text = "+ Pond"
+
+[node name="Save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 405.0
+offset_right = 54.0
+offset_bottom = 436.0
+text = "Save"
+
+[node name="Fish" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 51.0
+offset_bottom = 35.0
+
+[connection signal="pressed" from="AddPond" to="." method="_on_add_pond_pressed"]
+[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://f77hdqnog6rr"]
+
+[ext_resource type="Script" path="res://Scripts/add_ponds.gd" id="1_7p0pq"]
+
+[node name="Button" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "+ Pond"
+script = ExtResource("1_7p0pq")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

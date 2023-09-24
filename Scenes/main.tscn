@@ -1,0 +1,118 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2agenyh1pmir"]
+
+[ext_resource type="Texture2D" uid="uid://tth1k6kja0tv" path="res://Assets/Water_Bright.png" id="1_0ylo3"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_4wt4v"]
+[ext_resource type="PackedScene" uid="uid://e6rx7vhkuj6a" path="res://Scenes/pet.tscn" id="1_72581"]
+[ext_resource type="Texture2D" uid="uid://dmw8jy5vbmgw8" path="res://Assets/Isometric_Tiles_Pixel_Art/Blocks/water_block.png" id="2_wnlux"]
+[ext_resource type="Texture2D" uid="uid://c3rhue7vshk7q" path="res://Assets/Isometric_Tiles_Pixel_Art/Blocks/blocks_1.png" id="3_wnt7s"]
+[ext_resource type="PackedScene" uid="uid://cetyt4s1xia1l" path="res://Scenes/water_glimmer.tscn" id="5_pku7h"]
+[ext_resource type="PackedScene" uid="uid://f77hdqnog6rr" path="res://Scenes/add_ponds_btn.tscn" id="7_1txry"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k5fp5"]
+texture = ExtResource("1_0ylo3")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_66gdj"]
+texture = ExtResource("3_wnt7s")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jcwkv"]
+texture = ExtResource("2_wnlux")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_06o8m"]
+sources/2 = SubResource("TileSetAtlasSource_66gdj")
+sources/6 = SubResource("TileSetAtlasSource_jcwkv")
+sources/0 = SubResource("TileSetAtlasSource_k5fp5")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_bjmh8"]
+vertices = PackedVector2Array(72, 120, 136, 151, 104, 168, 68, 186, 38, 200, -23, 168)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(72, 120, 136, 151, 104, 168, 68, 186, 38, 200, -23, 168)])
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_4wt4v")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(70, 164)
+zoom = Vector2(1.5, 1.5)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_06o8m")
+cell_quadrant_size = 64
+format = 2
+layer_0/tile_data = PackedInt32Array(655362, 2, 0, 720900, 2, 0, 589828, 2, 0, 655366, 2, 0, 786434, 2, 0, 720896, 2, 0)
+
+[node name="Pet" parent="." instance=ExtResource("1_72581")]
+position = Vector2(70, 162)
+scale = Vector2(2, 2)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_bjmh8")
+
+[node name="Locations" type="Node" parent="."]
+
+[node name="1" type="Node2D" parent="Locations"]
+position = Vector2(114, 153)
+
+[node name="2" type="Node2D" parent="Locations"]
+position = Vector2(35, 184)
+
+[node name="3" type="Node2D" parent="Locations"]
+position = Vector2(71, 130)
+
+[node name="4" type="Node2D" parent="Locations"]
+position = Vector2(4, 164)
+
+[node name="WaterRight" parent="." instance=ExtResource("5_pku7h")]
+visible = false
+position = Vector2(131, 165)
+fish_value = 1
+
+[node name="WaterMiddle" parent="." instance=ExtResource("5_pku7h")]
+visible = false
+position = Vector2(99, 182)
+fish_value = 1
+
+[node name="WaterLeft" parent="." instance=ExtResource("5_pku7h")]
+position = Vector2(67, 198)
+fish_value = 1
+
+[node name="Save" type="Button" parent="."]
+offset_left = -23.0
+offset_top = 278.0
+offset_right = 21.0
+offset_bottom = 309.0
+text = "Save"
+
+[node name="Button" parent="." instance=ExtResource("7_1txry")]
+offset_left = 100.0
+offset_top = 279.0
+offset_right = 162.0
+offset_bottom = 310.0
+
+[node name="PondCost" type="Label" parent="."]
+offset_left = 53.0
+offset_top = 15.0
+offset_right = 125.0
+offset_bottom = 41.0
+text = "Pondcost"
+
+[node name="Level Cost" type="Label" parent="."]
+offset_left = 54.0
+offset_top = 38.0
+offset_right = 126.0
+offset_bottom = 64.0
+text = "Levelcost"
+
+[node name="fish" type="Label" parent="."]
+offset_left = -26.0
+offset_top = 18.0
+offset_right = 14.0
+offset_bottom = 41.0
+text = "Fish:"
+
+[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]

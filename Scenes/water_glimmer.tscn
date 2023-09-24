@@ -1,0 +1,137 @@
+[gd_scene load_steps=13 format=3 uid="uid://cetyt4s1xia1l"]
+
+[ext_resource type="Texture2D" uid="uid://da68e7mxfblvu" path="res://Assets/water_glimmer.png" id="1_v8a6g"]
+[ext_resource type="Script" path="res://Scripts/water_glimmer.gd" id="2_xdyl5"]
+[ext_resource type="Texture2D" uid="uid://tth1k6kja0tv" path="res://Assets/Water_Bright.png" id="3_qqku7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1a7e"]
+atlas = ExtResource("1_v8a6g")
+region = Rect2(0, 0, 57, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prrh6"]
+atlas = ExtResource("1_v8a6g")
+region = Rect2(57, 0, 57, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s88g"]
+atlas = ExtResource("1_v8a6g")
+region = Rect2(114, 0, 57, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pgwt0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1a7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prrh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4s88g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_s3g2s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_r7ih5"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(8.08205e-05),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(8.08205e-05, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bdswn"]
+_data = {
+"RESET": SubResource("Animation_s3g2s"),
+"idle": SubResource("Animation_r7ih5")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_403ie"]
+bg_color = Color(0, 0.254902, 0.368627, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2obcl"]
+bg_color = Color(0.196078, 0.615686, 1, 1)
+
+[node name="FishingBlocks" type="Node2D"]
+script = ExtResource("2_xdyl5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, 16)
+sprite_frames = SubResource("SpriteFrames_pgwt0")
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 0.9
+libraries = {
+"": SubResource("AnimationLibrary_bdswn")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 300.0
+autostart = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -4.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.471239
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_403ie")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2obcl")
+max_value = 300.0
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(5, 18)
+texture = ExtResource("3_qqku7")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
